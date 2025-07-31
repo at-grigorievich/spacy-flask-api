@@ -3,7 +3,7 @@
 # python -m spacy download ru_core_news_md
 # python -m spacy download en_core_web_md
 
-# input: {"text": "Он сказал что, приедет... завтра? но так и не приехал"}\
+# input: {"source": "Он сказал что, приедет... завтра? но так и не приехал"}\
 # output: {
 #"sentences": [
 #        "Он сказал что, приедет... завтра?",
