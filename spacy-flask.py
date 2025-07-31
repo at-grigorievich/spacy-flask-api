@@ -16,7 +16,10 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-nlp = spacy.load("en_core_web_md")
+nlp_models = {
+    "ru": spacy.load("ru_core_news_sm"),
+    "en": spacy.load("en_core_web_sm"),
+}
 
 @app.route('/ping', methods=['GET'])
 def ping():
@@ -25,11 +28,18 @@ def ping():
 @app.route('/split', methods=['POST'])
 def split():
     data = request.get_json(force=True)
-    text = data.get('source', '')
+    text = data.get('source', '').strip()
+    lang = data.get('lang', 'en').lower()
+    
     if not text:
         return jsonify({'error': 'No text provided'}), 400
 
+    if lang not in nlp_models:
+        return jsonify({'error': f"Unsupported language '{lang}'"}), 400
+
+    nlp = nlp_models[lang]
     doc = nlp(text)
+    
     sentences = [sent.text.strip() for sent in doc.sents]
 
     return jsonify({'sentences': sentences})
