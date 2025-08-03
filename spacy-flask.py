@@ -17,8 +17,8 @@ from flask import Flask, request, jsonify
 app = Flask(__name__)
 
 nlp_models = {
-    "ru": spacy.load("ru_core_news_sm"),
-    "en": spacy.load("en_core_web_sm"),
+    "ru": spacy.load("ru_core_news_md"),
+    "en": spacy.load("en_core_web_md"),
 }
 
 @app.route('/ping', methods=['GET'])
